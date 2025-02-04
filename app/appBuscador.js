@@ -1,11 +1,12 @@
 import React, {useState,useRef} from "react";
-import {View, Text, TextInput, TouchableOpacity, SafeAreaView, StyleSheet, keyboardType} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, SafeAreaView, StyleSheet, Keyboard} from 'react-native'
 import api from '../src/services/api03'
 
 export default function AppBuscador(){
 
     const [cep, setCep] = useState('')
     const inputRef = useRef(null)
+    const [cepUser, setCepUser] = useState (null)
 
     async function buscar(){
         if (cep == ''){
@@ -17,6 +18,8 @@ export default function AppBuscador(){
         try{
             const response  = await api.get(`/${cep}/json`);
             console.log(response.data)
+            setCepUser(response.data)
+            Keyboard.dismiss()  //Garante que o teclado será fechado
         }
         catch(error){
             console.log('Error: ' + error)
@@ -28,6 +31,7 @@ export default function AppBuscador(){
     function limpar(){
         setCep('')
         inputRef.current.focus()
+        setCepUser(null)
     }
 
 
@@ -63,14 +67,15 @@ export default function AppBuscador(){
           </View>
     
     
-
-            <View style={styles.resultado}>
-              <Text style={styles.itemText}>CEP: </Text>
-              <Text style={styles.itemText}>Logradouro: </Text>
-              <Text style={styles.itemText}>Bairro: </Text>
-              <Text style={styles.itemText}>Cidade: </Text>
-              <Text style={styles.itemText}>Estado: </Text>
-            </View>
+            {cepUser &&  //renderização condicional, quando começa nulo, ela só exibe dentro da condição
+                <View style={styles.resultado}>
+                <Text style={styles.itemText}>CEP: {cepUser.cep} </Text>
+                <Text style={styles.itemText}>Logradouro: {cepUser.logradouro} </Text>
+                <Text style={styles.itemText}>Bairro: { cepUser.bairro}</Text>
+                <Text style={styles.itemText}>Cidade:{cepUser.localidade} </Text>
+                <Text style={styles.itemText}>Estado:{cepUser.uf} </Text>
+                </View>
+            }
 
     
         </SafeAreaView>
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        marginTop:250
+        marginTop:5
     },
     itemText:{
         fontSize:18
