@@ -12,8 +12,8 @@ Este repositório contém os projetos e exercícios realizados durante meus estu
 
 ## 📦 Estrutura do Repositório
 
-- ** Cada aula, é uma atividade
-- ** Tem alguns desafios feitos em aula
+- **Cada aula, é uma atividade**
+- **Tem alguns desafios feitos em aula**
 
 ## 🎯 Objetivo  
 Estou na jornada de me tornar um programador para mobile, e toda ajuda é bem vinda! Fique à vontade em entrar em contato comigo e me ajudar a crescer aina mais!
